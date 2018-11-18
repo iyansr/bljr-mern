@@ -22,7 +22,6 @@ mongoose
 //     .then(()=> console.log('Mongod MLAB Connected'))
 //     .catch(err => console.log(err));
 
-
 app.get('/',(req,res)=>{
     res.send('Hello Kappa');
 });
