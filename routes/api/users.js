@@ -6,6 +6,11 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
+//Load Input validation
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
+
+
 //Load User model
 const User = require('../../models/User');
 
@@ -21,12 +26,19 @@ router.get('/test', (req, res) => {
 // @route   GET api/uers/register
 // @desc    Register User
 // access   Public
-
 router.post('/register',(req, res) =>{
+    const {errors, isValid} = validateRegisterInput(req.body);
+
+    //Check validation
+    if(!isValid){
+        return res.status(404).json(errors);
+    }
+
     User.findOne({email: req.body.email}) //Find user yang sudah ada
         .then(user => {
             if(user){ //Jika user sudah ada
-                return res.status(400).json({email: 'Email already exist'});
+                errors.email = 'Email alreadyexist'
+                return res.status(400).json(errors);
             }else{
                                 //Url Email
                 const avatar = gravatar.url(req.body.email, {
@@ -63,6 +75,13 @@ router.post('/register',(req, res) =>{
 // @desc    Login User / Returning JWT Token
 // access   Public
 router.post('/login', (req, res) => {
+    const {errors, isValid} = validateLoginInput(req.body);
+
+    //Check validation
+    if (!isValid) {
+        return res.status(404).json(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
     
@@ -71,7 +90,8 @@ router.post('/login', (req, res) => {
     .then(user => {
         //Check For User
         if(!user){
-            return res.status(404).json({email: 'User not found'});
+            errors.email = 'User email not found';
+            return res.status(404).json(errors);
         }
         
         //Check Password
@@ -92,7 +112,8 @@ router.post('/login', (req, res) => {
                             });
                         });
                     }else{
-                        return res.status(400).json({password: 'Password Incorrect'});
+                        errors.password = 'Password Incorrect';
+                        return res.status(400).json(errors);
                     }
                 })
             });
@@ -111,4 +132,4 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
 });
 
         
-        module.exports = router;    
+module.exports = router;    
