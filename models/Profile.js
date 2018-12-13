@@ -112,9 +112,6 @@ const ProfileSchema = new Schema({
         steam: {
             type: String
         },
-        github: {
-            type: String
-        },
     },
     date: {
         type: Date,
