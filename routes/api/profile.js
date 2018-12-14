@@ -75,29 +75,29 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     if(req.body.linkedin) profilefields.social.linkedin = req.body.linkedin;
     if(req.body.steam) profilefields.social.steam = req.body.steam;
 
-    Profile.findOne({user: req.user.id})
-        .then(profile => {
-            if(profile){
-                //Update
-                Profile.findByIdAndUpdate(
-                    {user: req.user.id}, 
-                    {$set: profilefields}, 
-                    {new: true}
-                ).then(profile => res.json(profile));
-            }else{
-                //Create
-
-                //Check if handle exist
-                Profile.findOne({handle: profilefields.handle}).then(profile => {
-                    if(profile){
-                        errors.handle = 'Handle is exsist';
-                        res.status(400).json(errors);
-                    }
-                    //Save profile
-                    new Profile(profilefields).save().then(profile => res.json(profile));
-                });
+    Profile.findOne({ user: req.user.id }).then(profile => {
+        if (profile) {
+          // Update
+          Profile.findOneAndUpdate(
+            { user: req.user.id },
+            { $set: profilefields },
+            { new: true }
+          ).then(profile => res.json(profile));
+        } else {
+          // Create
+  
+          // Check if handle exists
+          Profile.findOne({ handle: profilefields.handle }).then(profile => {
+            if (profile) {
+              errors.handle = 'That handle already exists';
+              res.status(400).json(errors);
             }
-        })
+  
+            // Save Profile
+            new Profile(profilefields).save().then(profile => res.json(profile));
+          });
+        }
+      });
 
 
 });
