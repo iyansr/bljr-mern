@@ -86,7 +86,7 @@ router.post('/', passport.authenticate('jwt', {
 
   Profile.findOne({
     user: req.user.id
-  }).then(profile => {
+  }).populate('user', ['name', 'avatar']).then(profile => {
     if (profile) {
       // Update
       Profile.findOneAndUpdate({
