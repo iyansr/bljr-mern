@@ -30,7 +30,7 @@ router.get('/', passport.authenticate('jwt', {
   const errors = {};
   Profile.findOne({
       user: req.user.id
-    })
+    }).populate('user', ['name', 'avatar'])
     .then(profile => {
       errors.noprofile = 'No profile for this user';
       if (!profile) {
@@ -86,7 +86,7 @@ router.post('/', passport.authenticate('jwt', {
 
   Profile.findOne({
     user: req.user.id
-  }).populate('user', ['name', 'avatar']).then(profile => {
+  }).then(profile => {
     if (profile) {
       // Update
       Profile.findOneAndUpdate({
