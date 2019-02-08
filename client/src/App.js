@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NavbarComp from './components/layout/Navbar'
+import Navbar from './components/layout/Navbar'
 import Landing from './components/layout/Landing'
 import Footer from './components/layout/Footer'
 // import style from './App.module.css'
@@ -11,7 +11,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<NavbarComp />
+				<Navbar />
 				<Landing />
 				<Footer />
 			</div>

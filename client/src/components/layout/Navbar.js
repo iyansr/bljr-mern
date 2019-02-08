@@ -1,50 +1,39 @@
 import React, { Component } from 'react'
-import bs from '../../globalstyle/bootstrap.min.module.css'
-import cx from 'classnames'
 
-class NavbarComp extends Component {
+class Navbar extends Component {
 	render() {
 		return (
-			<nav
-				className={cx(
-					bs.navbar,
-					bs['navbar-expand-sm'],
-					bs['navbar-dark'],
-					bs['bg-dark'],
-					bs['mb-4']
-				)}>
-				<div className={bs.container}>
-					<a className={bs['navbar-brand']} href="landing.html">
+			<nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+				<div className="container">
+					<a className="navbar-brand" href="landing.html">
 						DevConnector
 					</a>
 					<button
-						className={bs['navbar-toggler']}
+						className="navbar-toggler"
 						type="button"
 						data-toggle="collapse"
 						data-target="#mobile-nav">
-						<span className={bs['navbar-toggler-icon']} />
+						<span className="navbar-toggler-icon" />
 					</button>
 
-					<div
-						className={cx(bs.collapse, bs['navbar-collapse'])}
-						id="mobile-nav">
-						<ul className={cx(bs['navbar-nav'], bs['mr-auto'])}>
-							<li className={bs['nav-item']}>
-								<a className={bs['nav-link']} href="profiles.html">
+					<div className="collapse navbar-collapse" id="mobile-nav">
+						<ul className="navbar-nav mr-auto">
+							<li className="nav-item">
+								<a className="nav-link" href="profiles.html">
 									{' '}
 									Developers
 								</a>
 							</li>
 						</ul>
 
-						<ul className={cx(bs['navbar-nav'], bs['ml-auto'])}>
-							<li className={bs['nav-item']}>
-								<a className={bs['nav-link']} href="register.html">
+						<ul className="navbar-nav ml-auto">
+							<li className="nav-item">
+								<a className="nav-link" href="register.html">
 									Sign Up
 								</a>
 							</li>
-							<li className={bs['nav-item']}>
-								<a className={bs['nav-link']} href="login.html">
+							<li className="nav-item">
+								<a className="nav-link" href="login.html">
 									Login
 								</a>
 							</li>
@@ -56,4 +45,4 @@ class NavbarComp extends Component {
 	}
 }
 
-export default NavbarComp
+export default Navbar
