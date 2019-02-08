@@ -21,14 +21,14 @@ mongoose
 	.then(() => console.log('Mongodb Local Connected'))
 	.catch(err => console.log(err))
 
-// DB Config
-const db = require('./config/keys').mongoURI
+// // DB Config
+// const db = require('./config/keys').mongoURI
 
-// Connect to MongoDB
-mongoose
-	.connect(db)
-	.then(() => console.log('MongoDB Connected'))
-	.catch(err => console.log(err))
+// // Connect to MongoDB
+// mongoose
+// 	.connect(db)
+// 	.then(() => console.log('MongoDB Connected'))
+// 	.catch(err => console.log(err))
 
 // Passport middleware
 app.use(passport.initialize())
