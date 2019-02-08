@@ -1,49 +1,46 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const passport = require('passport');
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const passport = require('passport')
 
-const users = require('./routes/api/users');
-const profile = require('./routes/api/profile');
-const posts = require('./routes/api/posts');
+const users = require('./routes/api/users')
+const profile = require('./routes/api/profile')
+const posts = require('./routes/api/posts')
 
-const app = express();
+const app = express()
 
-//body-parser middleware
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(bodyParser.json());
-
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 //Connect to local mongoose
 mongoose
-  .connect('mongodb://localhost:27017/devcon', {
-    useNewUrlParser: true
-  })
-  .then(() => console.log('Mongodb Local Connected'))
-  .catch(err => console.log(err));
+	.connect('mongodb://localhost:27017/devcon', {
+		useNewUrlParser: true
+	})
+	.then(() => console.log('Mongodb Local Connected'))
+	.catch(err => console.log(err))
 
-
-//connect to mlab mongoose
 // DB Config
-// const db = require('./config/keys.js').mongoURI;
-// mongoose
-//     .connect(db, {useNewUrlParser: true})
-//     .then(()=> console.log('Mongod MLAB Connected'))
-//     .catch(err => console.log(err));
+const db = require('./config/keys').mongoURI
 
-//Passport middleware
-app.use(passport.initialize());
+// Connect to MongoDB
+mongoose
+	.connect(db)
+	.then(() => console.log('MongoDB Connected'))
+	.catch(err => console.log(err))
 
-//Passport Config
-require('./config/passport')(passport);
+// Passport middleware
+app.use(passport.initialize())
 
-//Use Routes
-app.use('/api/users', users);
-app.use('/api/profile', profile);
-app.use('/api/posts', posts);
+// Passport Config
+require('./config/passport')(passport)
 
-const port = 5000;
+// Use Routes
+app.use('/api/users', users)
+app.use('/api/profile', profile)
+app.use('/api/posts', posts)
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+const port = process.env.PORT || 5000
+
+app.listen(port, () => console.log(`Server running on port ${port}`))
